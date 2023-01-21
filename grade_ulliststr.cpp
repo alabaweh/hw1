@@ -1,8 +1,6 @@
 #include "ulliststr.h"
-
 #include <gtest/gtest.h>
 #include <random>
-
 #include <string>
 #include <vector>
 #include <sstream>
