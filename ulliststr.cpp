@@ -46,10 +46,12 @@ void ULListStr::push_back(const std::string& val)
 
     Item *currNode = nullptr;
 
-    newNode = new Item;
+    
 
     if (!head_) // if the head_ is empty
     {
+
+      newNode = new Item;
         head_ = newNode;
         head_->val[head_->last]=val;
         head_->last++;
@@ -65,6 +67,8 @@ void ULListStr::push_back(const std::string& val)
             currNode->last++;}
 
         else{
+
+          newNode = new Item;
 
             currNode->next=newNode;
             newNode->prev=currNode;
@@ -91,11 +95,13 @@ void ULListStr::push_front(const std::string& val) {
     Item *currNode = nullptr;
 
 
-    newNode = new Item;
+    
 
 
     if (!head_)  // if the head_ is empty
     {
+
+      newNode = new Item;
         head_ = newNode;
         head_->val[ARRSIZE-1]=val;
         head_->last=ARRSIZE;
@@ -103,7 +109,17 @@ void ULListStr::push_front(const std::string& val) {
         tail_=head_;
     }
 
-    else if(head_->last - head_->first <= ARRSIZE){ // this is to check if there head_ is full
+    
+    else if(head_->first !=0){
+        head_->first--;
+        head_->val[head_->first]=val;
+ 
+    }
+
+    else if(head_->first ==0){ // this is to check if there head_ is full
+        
+       
+        newNode = new Item;
         currNode=head_;
         head_=newNode;
         head_->next=currNode;
@@ -111,10 +127,7 @@ void ULListStr::push_front(const std::string& val) {
         head_->val[ARRSIZE-1]=val;
         head_->last=ARRSIZE;
         head_->first=ARRSIZE-1;
-    }
-    else if(head_->first !=0 && head_->last>=1){
-        head_->first--;
-        head_->val[head_->first]=val;
+
     }
 
     set_size(1);
@@ -133,17 +146,17 @@ void ULListStr::pop_front(){
 
         currNode=head_;
 
-        if(!(head_->next))
+        if(!(head_->next)){
            head_= nullptr;
+           tail_=nullptr;
+           }
         else{
         head_=head_->next;
         head_->prev= nullptr;
-
-
-        delete  currNode;
-
         // currNode= nullptr;
         }
+
+         delete  currNode;
     }
 
     else{
@@ -167,7 +180,7 @@ void ULListStr::pop_back(){
         return;
 
 
-    if(tail_->last<=10 && (tail_->last-1 != tail_->first)){
+    if(tail_->last-1 != tail_->first){
         tail_->val[tail_->last-1]="";
         tail_->last--;
 
@@ -182,6 +195,7 @@ void ULListStr::pop_back(){
         if(head_ == tail_) {
             delete tail_;
             head_ = nullptr;
+            tail_=nullptr;
 
         }
         else {
